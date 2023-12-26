@@ -36,23 +36,23 @@ pipeline {
                 }
             }
         }
-    }
-}
-        /*
         stage("docker build & docker push"){
             steps{
                 script{
                     withCredentials([string(credentialsId: 'docker', variable: 'docker_password')]) {
                              sh '''
-                                docker build -t sudhakarbastawade/helm-deploy:${VERSION} .
-                                docker login -u sudhakarbastawade -p $docker_password
-                                docker push sudhakarbastawade/helm-deploy:${VERSION}
-                                docker rmi sudhakarbastawade/helm-deploy:${VERSION}
+                                docker build -t shubham177501/helm-deploy:${VERSION} .
+                                docker login -u shubham177501 -p $docker_password
+                                docker push shubham177501/helm-deploy:${VERSION}
+                                docker rmi shubham177501/helm-deploy:${VERSION}
                             '''
                     }
                 }
             }
         }
+    }
+}
+        /*
         stage('manual approval'){
             steps{
                 script{
