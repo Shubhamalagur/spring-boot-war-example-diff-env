@@ -17,17 +17,15 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-    }
-}
-        /*
         stage('Static Code Analysis') {
             environment {
-            SONAR_URL = "http://52.205.251.40:9000"
+            SONAR_URL = "http://34.125.47.253:9000"
             }
             steps {
                 script {
-                    // withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_AUTH_TOKEN')]) {
-                       withSonarQubeEnv(credentialsId: 'sonar-token') {
+                    withCredentials([string(credentialsId: 'sonarqube_id', variable: 'SONAR_AUTH_TOKEN')]) {
+                    //   withSonarQubeEnv(credentialsId: 'sonarqube_id') 
+                    {
                         sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
                     }
                     timeout(time: 1, unit: 'HOURS') {
@@ -39,6 +37,9 @@ pipeline {
                 }
             }
         }
+    }
+}
+        /*
         stage("docker build & docker push"){
             steps{
                 script{
