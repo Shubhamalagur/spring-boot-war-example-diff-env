@@ -50,8 +50,6 @@ pipeline {
                 }
             }
         }
-    }
-}
         /*
         stage('manual approval'){
             steps{
@@ -62,12 +60,12 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('Deploying application on k8s cluster') {
             steps {
               script{
-                  // withCredentials([kubeconfigFile(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-		       withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                  // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+		       withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		       dir('kubernetes/') {
                           sh 'helm upgrade --install --set image.repository="sudhakarbastawade/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ ' 
                         }
@@ -78,4 +76,3 @@ pipeline {
         
     }
 }
-*/
