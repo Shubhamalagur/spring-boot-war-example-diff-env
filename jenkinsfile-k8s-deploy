@@ -23,9 +23,9 @@ pipeline {
             }
             steps {
                 script {
-                       withCredentials([string(credentialsId: 'sonarqube_id', variable: 'SONAR_AUTH_TOKEN')]) {
-                    //   withSonarQubeEnv(credentialsId: 'sonarqube_id') {
-                        sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+                    //   withCredentials([string(credentialsId: 'sonarqube_id', variable: 'SONAR_AUTH_TOKEN')]) {
+                        withSonarQubeEnv(credentialsId: 'sonarqube_id') {
+                        sh 'mvn sonar:sonar'
                     }
                     timeout(time: 1, unit: 'HOURS') {
                         def qg = waitForQualityGate()
