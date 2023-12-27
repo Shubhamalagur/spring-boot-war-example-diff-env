@@ -49,12 +49,11 @@ pipeline {
                         def uploadSpec = """{
                             "files": [
                                 {
-                                    "pattern": "(target/*.jar | target/*.war)",
+                                    "pattern": "target/*.jar",
                                     "target": "${TARGET_REPO}/"
                                 }
                             ]
                         }"""
-                        
                         server.upload(uploadSpec)
                     } catch (Exception e) {
                         error("Failed to deploy artifacts to Artifactory: ${e.message}")
