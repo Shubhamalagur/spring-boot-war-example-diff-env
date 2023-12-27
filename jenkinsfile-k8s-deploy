@@ -36,6 +36,32 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Artifactory') {
+            environment {
+                // Define the target repository in Artifactory
+                TARGET_REPO = 'java-web-app'
+            }
+            
+            steps {
+                script {
+                    try {
+                        def server = Artifactory.newServer url: 'http://34.125.47.253:8082/artifactory', credentialsId: 'ARTIFACTORY_ACCESS_TOKEN'
+                        def uploadSpec = """{
+                            "files": [
+                                {
+                                    "pattern": "target/*.jar",
+                                    "target": "${TARGET_REPO}/"
+                                }
+                            ]
+                        }"""
+                        
+                        server.upload(uploadSpec)
+                    } catch (Exception e) {
+                        error("Failed to deploy artifacts to Artifactory: ${e.message}")
+                    }
+                }
+            }
+        }
         stage("docker build & docker push"){
             steps{
                 script{
