@@ -51,6 +51,10 @@ pipeline {
                                 {
                                     "pattern": "target/*.jar",
                                     "target": "${TARGET_REPO}/"
+                                },
+                                {
+                                    "pattern": "target/*.war",
+                                    "target": "${TARGET_REPO}/"
                                 }
                             ]
                         }"""
