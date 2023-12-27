@@ -41,6 +41,7 @@ pipeline {
                 script{
                     withCredentials([string(credentialsId: 'docker', variable: 'docker_password')]) {
                              sh '''
+                                sudo chmod 777 /var/run/docker.sock
                                 docker build -t shubham177501/helm-deploy:${VERSION} .
                                 docker login -u shubham177501 -p $docker_password
                                 docker push shubham177501/helm-deploy:${VERSION}
