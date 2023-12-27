@@ -6,15 +6,26 @@ pipeline {
     environment{
         VERSION = "${env.BUILD_ID}"
     }
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'master', description: 'Enter the Git branch name')
+    }
     stages {
-        stage('pull source code') {
+        stage('Checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sudhakarbastawade2303/spring-boot-war-example.git']])
+                script {
+                    echo "Checking out ${params.BRANCH_NAME} branch..."
+                    checkout([$class: 'GitSCM', 
+                              branches: [[name: "*/${params.BRANCH_NAME}"]],
+                              userRemoteConfigs: [[url: 'https://github.com/Shubhamalagur/spring-boot-war-example-parameter.git']]])
+                }
             }
         }
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                script {
+                    echo "Building ${params.BRANCH_NAME} branch..."
+                    sh 'mvn clean install'
+                }
             }
         }
         stage('Static Code Analysis') {
