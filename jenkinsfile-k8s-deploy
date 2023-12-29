@@ -102,13 +102,13 @@ pipeline {
                     def targetEnv = ''
                     
                     if (params.BRANCH_NAME == 'master') {
-                        targetEnv = 'Prod'
-                    } else if (params.BRANCH_NAME == 'Dev') {
-                        targetEnv = 'Dev'
-                    } else if (params.BRANCH_NAME == 'Test') {
-                        targetEnv = 'Test'
+                        targetEnv = 'prod'
+                    } else if (params.BRANCH_NAME == 'dev') {
+                        targetEnv = 'dev'
+                    } else if (params.BRANCH_NAME == 'test') {
+                        targetEnv = 'test'
                     }
-                    if (targetEnv == 'Prod') 
+                    if (targetEnv == 'prod') 
 						{
 						script{
                             timeout(10) {
@@ -120,12 +120,32 @@ pipeline {
                             // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    dir('kubernetes/') {
-                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ ' 
+                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ -n ${env.targetEnv}' 
                                 }
                             }
                         }
 
 					}
+                    else if (targetEnv == 'dev'){
+                        script{
+                            // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+		                    dir('kubernetes/') {
+                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ -n ${env.targetEnv}' 
+                                }
+                            }
+                        }
+                    }
+                    else if (targetEnv == 'test'){
+                        script{
+                            // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+		                    dir('kubernetes/') {
+                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ -n ${env.targetEnv}' 
+                                }
+                            }
+                        }
+                    }
                 }
             } 
         }
