@@ -99,16 +99,16 @@ pipeline {
         stage('Deploying application on k8s cluster') {
             steps {
                 script {
-                    def targetEnv = ''
+                    //def targetEnv = ''
                     
                     if (params.BRANCH_NAME == 'master') {
-                        targetEnv = 'prod'
+                       def targetEnv = "prod"
                     } else if (params.BRANCH_NAME == 'dev') {
-                        targetEnv = 'dev'
+                       def targetEnv = "dev"
                     } else if (params.BRANCH_NAME == 'test') {
-                        targetEnv = 'test'
+                       def targetEnv = "test"
                     }
-                    if (targetEnv == 'prod') 
+                    if (targetEnv == "prod") 
 						{
 						script{
                             timeout(10) {
@@ -125,7 +125,7 @@ pipeline {
                             }
                         }
 					}
-                    else if (targetEnv == 'dev'){
+                    else if (targetEnv == "dev"){
                         script{
                             // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
@@ -135,7 +135,7 @@ pipeline {
                             }
                         }
                     }
-                    else if (targetEnv == 'test'){
+                    else if (targetEnv == "test"){
                         script{
                             // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
