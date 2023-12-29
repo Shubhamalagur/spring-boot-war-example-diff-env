@@ -99,14 +99,14 @@ pipeline {
         stage('Deploying application on k8s cluster') {
             steps {
                 script {
-                    //def targetEnv = ''
+                    def targetEnv = " "
                     
                     if (params.BRANCH_NAME == 'master') {
-                       def targetEnv = "prod"
+                        targetEnv = "prod"
                     } else if (params.BRANCH_NAME == 'dev') {
-                       def targetEnv = "dev"
+                        targetEnv = "dev"
                     } else if (params.BRANCH_NAME == 'test') {
-                       def targetEnv = "test"
+                        targetEnv = "test"
                     }
                     if (targetEnv == "prod") 
 						{
