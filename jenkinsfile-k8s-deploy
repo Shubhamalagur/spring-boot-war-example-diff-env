@@ -121,7 +121,7 @@ pipeline {
                             // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    dir('kubernetes/') {
-                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ --namespace /"${targetEnv}/"' 
+                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ --namespace "${targetEnv}"' 
                                 }
                             }
                         }
