@@ -121,7 +121,7 @@ pipeline {
                             // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    dir('kubernetes/') {
-                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ --values values.yaml' 
+                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ --values myapp/values.yaml' 
                                 }
                             }
                         }
@@ -131,7 +131,7 @@ pipeline {
                             // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    dir('kubernetes/') {
-                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ --namespace targetEnv --values values-dev.yaml' 
+                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ --namespace targetEnv --values myapp/values-dev.yaml' 
                                 }
                             }
                         }
@@ -141,7 +141,7 @@ pipeline {
                             // withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    withCredentials([file(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
 		                    dir('kubernetes/') {
-                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ --namespace ${targetEnv} --values values-test.yaml' 
+                                    sh 'helm upgrade --install --set image.repository="shubham177501/helm-deploy" --set image.tag="${VERSION}" myjavaapp myapp/ --namespace ${targetEnv} --values myapp/values-test.yaml' 
                                 }
                             }
                         }
