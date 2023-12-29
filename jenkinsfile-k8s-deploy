@@ -108,7 +108,7 @@ pipeline {
                     } else if (params.BRANCH_NAME == 'Test') {
                         targetEnv = 'Test'
                     }
-                    if (targetEnv = 'Prod') 
+                    if (targetEnv == 'Prod') 
 						{
 						script{
                             timeout(10) {
